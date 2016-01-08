@@ -1,0 +1,48 @@
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+*~
+._*
+*.swp
+.sass-cache/
+.idea/
+/logs/
+dist/
+tmp/
+tags
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+
+### CTX Boilerplate ###
+
+# Npm & Bower modules
+/node_modules/
+/vendor/
+
+# builds and test related
+/build/
+/coverage/
+test-results.xml
+
+
+## Ignore SSL stuff
+*.csr
+*.crt
+*.key
+
+# Files generated from templates
+/docs/src/templates/index.html
+
+# local nginx conf
+*.ef.com.conf
+
+# schema hardlinks
+*.schema
+
+*.sublime-workspace
