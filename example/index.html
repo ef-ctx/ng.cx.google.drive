@@ -1,0 +1,31 @@
+<html>
+<head>
+	<title>ng.cx.google.drive</title>
+	<script src="../node_modules/systemjs/dist/system.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="app.js"></script>
+	<script src="system.config.js"></script>
+	<script src="../dist/ng.cx.google.drive.js"></script>
+	<script>
+		System.import('cx/googleDrive')
+			.then(function (module) {
+				module.GoogleDrive.bootstrap();
+
+				angular.element(document).ready(function() {
+				    angular.bootstrap(document, ['ng.cx.google.drive.example']);
+				});
+			});
+	</script>
+</head>
+<body>
+<div ng-controller="MainCtrl">
+	{{ msg }}
+	<button ng-click="authorize()">authorize</button>
+	<ul>
+		<li ng-repeat="item in items">
+			{{item.title}}
+		</li>
+	</ul>
+</div>
+</body>
+</html>

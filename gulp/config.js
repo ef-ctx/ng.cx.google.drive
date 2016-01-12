@@ -1,5 +1,7 @@
 var config = {
+	'dist': 'dist/',
 	'output': 'build/',
+	'example': 'example/',
 	'vendor': {
 		'js': [
 			'node_modules/systemjs/dist/system-polyfills.src.js',
@@ -14,7 +16,10 @@ var config = {
 		]
 	},
 	'typescript': {
-		'tsconfig': 'src/tsconfig.json'
+		'inputPath': 'cx/googleDrive.js',
+		'systemConfig': 'src/system.config.js',
+		'tsconfig': 'src/tsconfig.json',
+		'tsconfigExample': 'src/tsconfig.example.json'
 	},
 	'test': {
 		'js': [

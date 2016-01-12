@@ -1,4 +1,4 @@
-// Type definitions for Google API Client
+﻿// Type definitions for Google API Client
 // Project: https://code.google.com/p/google-api-javascript-client/
 // Definitions by: Frank M <https://github.com/sgtfrankieboy>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
@@ -15,7 +15,7 @@ interface GoogleApiOAuth2TokenObject {
     /**
      * Details about the error. Only present in error responses
      */
-    error?: string;
+    error: string;
     /**
      * The duration, in seconds, the token is valid for. Only present in successful responses
      */

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc -p src -w",
-    "start": "live-server --open=src"
+    "start": "live-server --open=example"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,7 @@
     "karma-phantomjs-launcher": "^0.2.3",
     "live-server": "^0.8.2",
     "phantomjs": "^1.9.19",
+    "systemjs-builder": "^0.15.0",
     "typescript": "^1.7.5"
   }
 }

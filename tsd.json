@@ -10,9 +10,6 @@
     },
     "es6-promise/es6-promise.d.ts": {
       "commit": "ba257a9b91bc0de1bdd9091b6723194c905a902a"
-    },
-    "gapi/gapi.d.ts": {
-      "commit": "ba257a9b91bc0de1bdd9091b6723194c905a902a"
     }
   }
 }

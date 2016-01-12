@@ -1,8 +1,10 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
+import {API} from 'google/google';
+
 var SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
 
-export class AuthClient {
+export class Auth {
   scopes: Array<string>;
   clientId: string;
 
@@ -22,12 +24,16 @@ export class AuthClient {
   private _authorize(resolve, reject, immediate) {
 		var self = this;
 
-		gapi.auth.authorize({
-				'client_id': self.clientId,
-				'scope': self.scopes,
-				'immediate': immediate
-			},
-			self._handleAuthResult(resolve, reject));
+		API.bootstrap().then(_gapi_authorize);
+
+		function _gapi_authorize() {
+			gapi.auth.authorize({
+					'client_id': self.clientId,
+					'scope': self.scopes,
+					'immediate': immediate
+				},
+				self._handleAuthResult(resolve, reject));
+		}
 	}
 
   private _handleAuthResult(resolve, reject) {
