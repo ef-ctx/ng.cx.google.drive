@@ -1,10 +1,56 @@
 /// <reference path="../../typings/tsd.d.ts" />
 /// <reference path="drive.ts" />
 
-import {Drive} from 'google/drive';
+import {Drive, DriveFilesListQuery} from 'google/drive';
 import {gapi} from 'test.mocks';
 
 export function main() {
+	describe('DriveFilesListQuery', function() {
+		it('should equal', function() {
+			var _query = new DriveFilesListQuery();
+
+			_query
+				.equal('name', 'Monkey brains')
+				.equal('mimeType', 'image/gif');
+
+			expect(_query.toString()).toBe('name="Monkey brains",mimeType="image/gif"')
+    });
+
+    it('should not equal', function() {
+			var _query = new DriveFilesListQuery();
+
+			_query
+				.not.equal('name', 'Monkey brains')
+				.not.equal('mimeType', 'image/gif');
+
+			expect(_query.toString()).toBe('name!="Monkey brains",mimeType!="image/gif"')
+    });
+
+    it('should equal collection', function() {
+			var _query = new DriveFilesListQuery();
+
+			_query
+				.equal('parents', 'xPKyprusppKelcnMvLmMx89Y4N3CLtbU');
+
+			expect(_query.toString()).toBe('"xPKyprusppKelcnMvLmMx89Y4N3CLtbU" in parents')
+
+			expect(function() {
+				_query.not.equal('parents', 'xPKyprusppKelcnMvLmMx89Y4N3CLtbU');
+			}).toThrow(new Error('DriveFilesListQuery: QueryCollectionField only supports operator "in"'));
+    });
+
+    it('should mix', function() {
+			var _query = new DriveFilesListQuery();
+
+			_query
+				.not.equal('name', 'Monkey brains')
+				.equal('mimeType', 'image/gif')
+				.equal('parents', 'xPKyprusppKelcnMvLmMx89Y4N3CLtbU');
+
+			expect(_query.toString()).toBe('name!="Monkey brains",mimeType="image/gif","xPKyprusppKelcnMvLmMx89Y4N3CLtbU" in parents')
+    });
+  });
+
 	describe('Drive', function() {
 		beforeEach(function() {
 			spyOn(gapi.client.drive.files, 'list').and.callThrough();
@@ -20,28 +66,33 @@ export function main() {
     });
 
     it('should load files from google drive with a query', function(done) {
-			var _query = {
-				'name': 'Monkey brains'
-			};
+			var _query = new DriveFilesListQuery();
+
+			_query
+				.equal('name', 'Monkey brains')
+				.not.equal('mimeType', 'image/gif');
 
 			Drive.list(10, _query).then(function() {
 				expect(gapi.client.drive.files.list).toHaveBeenCalledWith({
 					'pageSize': 10,
-					'q': 'name="Monkey brains"'
+					'q': 'name="Monkey brains",mimeType!="image/gif"'
 				});
 				done();
 			});
     });
 
 		it('should load files from google drive with a query with collection', function(done) {
-			var _query = {
-				'name': 'Monkey brains'
-			};
+			var _query = new DriveFilesListQuery();
+			var _query2 = new DriveFilesListQuery();
+
+			_query
+				.equal('name', 'Monkey brains')
+				.equal('parents', 'xPKyprusppKelcnMvLmMx89Y4N3CLtbU')
 
 			Drive.list(10, _query).then(function() {
 				expect(gapi.client.drive.files.list).toHaveBeenCalledWith({
 					'pageSize': 10,
-					'q': 'name="Monkey brains"'
+					'q': 'name="Monkey brains","xPKyprusppKelcnMvLmMx89Y4N3CLtbU" in parents'
 				});
 				done();
 			});
