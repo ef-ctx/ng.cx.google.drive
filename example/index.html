@@ -1,8 +1,51 @@
 <html>
 <head>
 	<title>ng.cx.google.drive</title>
-	<script src="../node_modules/systemjs/dist/system.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.1/angular-material.min.css" />
+
+</head>
+<body>
+	<div ng-controller="MainCtrl" ng-cloak>
+		<h1>ng.cx.google.drive</h1>
+		<div ng-show="loading">
+			loading...
+		</div>
+		<div ng-show="!loading">
+			<div ng-show="!authorized">
+				<md-button class="md-raised md-primary" ng-click="authorize()">Authorize</md-button>
+			</div>
+			<div layout="row" layout-padding ng-show="authorized">
+				<div flex="33">
+					<md-content>
+				    <md-list>
+				      <md-subheader class="md-no-sticky">{{ items.length }} files</md-subheader>
+				      <md-list-item class="md-2-line" ng-repeat="item in items">
+				        <img ng-src="{{item.thumbnailLink || item.iconLink}}" alt="{{item.name}}" />
+				        <div class="md-list-item-text" layout="row">
+				          <h3>{{ item.name }}</h3>
+				          <md-button ng-click="open(item)">Open</md-button>
+				        </div>
+				      </md-list-item>
+				    </md-list>
+				  </md-content>
+				</div>
+				<div flex="66">
+					<div ng-show="selectedFile">
+						<h2>{{selectedFile.name}}</h2>
+						<p>{{selectedFile.webContentLink}}</p>
+						<md-button ng-click="genereatePublicLink()">genereatePublicLink</md-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.16/system.js"></script>
+	<script src="//apis.google.com/js/client.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
 	<script src="app.js"></script>
 	<script src="system.config.js"></script>
 	<!--script src="../dist/ng.cx.google.drive.js"></script-->
@@ -16,16 +59,5 @@
 				});
 			});
 	</script>
-</head>
-<body>
-<div ng-controller="MainCtrl">
-	{{ msg }}
-	<button ng-click="authorize()">authorize</button>
-	<ul>
-		<li ng-repeat="item in items">
-			<a href="javascript:void(0)" ng-click="get(item.id)">{{item.name}}</a>
-		</li>
-	</ul>
-</div>
 </body>
 </html>

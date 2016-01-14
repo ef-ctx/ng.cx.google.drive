@@ -8,5 +8,5 @@ declare module gapi.client.drive.files {
 }
 
 declare module gapi.client.drive.permissions {
-	export function update(payload: any): void;
+	export function create(payload: any): void;
 }

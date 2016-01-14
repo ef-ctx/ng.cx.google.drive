@@ -44,7 +44,7 @@ export function main() {
 
 			Drive.list(_query).then(function() {
 				expect(gapi.client.drive.files.list).toHaveBeenCalledWith({
-					'q': 'name="Monkey brains",mimeType!="image/gif"'
+					'q': 'name="Monkey brains" and mimeType!="image/gif"'
 				});
 				done();
 			});
@@ -60,7 +60,7 @@ export function main() {
 
 			Drive.list(_query).then(function() {
 				expect(gapi.client.drive.files.list).toHaveBeenCalledWith({
-					'q': 'name="Monkey brains","xPKyprusppKelcnMvLmMx89Y4N3CLtbU" in parents'
+					'q': 'name="Monkey brains" and "xPKyprusppKelcnMvLmMx89Y4N3CLtbU" in parents'
 				});
 				done();
 			});

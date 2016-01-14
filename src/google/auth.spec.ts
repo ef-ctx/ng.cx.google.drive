@@ -26,7 +26,7 @@ export function main() {
         var client = new Auth('42');
 
         expect(client.clientId).toBe('42');
-        expect(client.scopes).toEqual(['https://www.googleapis.com/auth/drive.metadata.readonly']);
+        expect(client.scopes).toEqual(['https://www.googleapis.com/auth/drive']);
     });
 
     it('should call gapi.auth.authorize and resolve promise', function(done) {

@@ -57,17 +57,91 @@ function queryCollectionField(target: DriveQueryQ, propertyKey: string) {
 
 class QueryField {
 	key: string;
-	operator: string;
-	value: any;
+	operatorValuePair: any;
 
-	constructor(key: string, operator: string, value?: string) {
+	private defaultOperator: string;
+
+	constructor(key: string, defaultOperator: string) {
 		this.key = key;
-		this.operator = operator;
-		this.value = value;
+		this.defaultOperator = defaultOperator;
+		this.operatorValuePair = {};
+
+		this.operatorValuePair[OPERATORS.EQUAL] = [];
+		this.operatorValuePair[OPERATORS.NOT_EQUAL] = [];
+		this.operatorValuePair[OPERATORS.IN] = [];
+	}
+
+	get valuesCount(): number {
+		var n = 0,
+			operator;
+
+		for (operator in this.operatorValuePair) {
+			n += this.operatorValuePair[operator].length;
+		}
+
+		return n;
+	}
+
+	set(operator: string, value: any) {
+		var _operator = operator || this.defaultOperator;
+		if (!this.operatorValuePair.hasOwnProperty(_operator)) {
+			throw new Error('Uknown operator "' + _operator + '" for QueryField when setting value "' + value + '"');
+		}
+
+		this.operatorValuePair[_operator].push(value);
+	}
+
+	toString(): string {
+		var _values = [],
+			_orStr,
+			_or,
+			_operator,
+			i,
+			j;
+
+		for (_operator in this.operatorValuePair) {
+			for (i = 0; i < this.operatorValuePair[_operator].length; i += 1) {
+				if (this.operatorValuePair[_operator][i] instanceof Array) {
+					_orStr = '(';
+					_or = [];
+
+					for (j = 0; j < this.operatorValuePair[_operator][i].length; j += 1) {
+						_or.push(this.key + _operator + '"' + this.operatorValuePair[_operator][i][j] + '"');
+					}
+
+					_orStr += _or.join(' or ');
+					_orStr += ')';
+
+					_values.push(_orStr);
+				} else {
+					_values.push(this.key + _operator + '"' + this.operatorValuePair[_operator][i] + '"');
+				}
+			}
+		}
+
+		if (_values.length > 1) {
+			return _values.join(' and ');
+		}
+
+		return _values.join('');
 	}
 }
 
-class QueryCollectionField extends QueryField { }
+class QueryCollectionField extends QueryField {
+	toString(): string {
+		var _values = [],
+			_operator,
+			i;
+
+		for (_operator in this.operatorValuePair) {
+			for (i = 0; i < this.operatorValuePair[_operator].length; i += 1) {
+				_values.push('"' + this.operatorValuePair[_operator][i] + '" ' +_operator + ' ' + this.key);
+			}
+		}
+
+		return _values.join('');
+	}
+}
 
 class DriveQueryQ implements IDriveQueryQ {
 	@queryField
@@ -214,19 +288,17 @@ class DriveQueryQ implements IDriveQueryQ {
 	}
 
 	toString() {
-		var _q: string[] = [];
+		var _q: string[] = [],
+			_qField:QueryField;
 
 		for (let key in this._queryFields) {
-			if (this._queryFields.hasOwnProperty(key) && (this._queryFields[key].value !== undefined)) {
-				if (this._queryFields[key] instanceof QueryCollectionField) {
-					_q.push('"' + this._queryFields[key].value + '" ' + this._queryFields[key].operator + ' ' + this._queryFields[key].key);
-				} else {
-					_q.push(this._queryFields[key].key + this._queryFields[key].operator + '"' + this._queryFields[key].value + '"');
-				}
+			if (this._queryFields.hasOwnProperty(key) && (this._queryFields[key].valuesCount > 0)) {
+				_qField = this._queryFields[key];
+				_q.push(_qField.toString());
 			}
 		}
 
-		return _q.join(',');
+		return _q.join(' and ');
 	}
 }
 
@@ -263,12 +335,11 @@ export class DriveQuery {
 			throw new Error('DriveQuery: No property named "' + prop + '"');
 		}
 
-		if (this._queryQ._queryFields[prop] instanceof QueryCollectionField && ((operator || this._queryQ._queryFields[prop].operator) !== OPERATORS.IN)) {
+		if (this._queryQ._queryFields[prop] instanceof QueryCollectionField && ((operator || this._queryQ._queryFields[prop].defaultOperator) !== OPERATORS.IN)) {
 			throw new Error('DriveQuery: QueryCollectionField only supports operator "' + OPERATORS.IN + '"');
 		}
 
-		this._queryQ._queryFields[prop].operator = operator || this._queryQ._queryFields[prop].operator;
-		this._queryQ._queryFields[prop].value = value;
+		this._queryQ._queryFields[prop].set(operator, value);
 
 		return this;
 	}

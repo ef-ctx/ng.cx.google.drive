@@ -1,4 +1,7 @@
 
+const MIME_TYPES = {
+	'FOLDER': 'application/vnd.google-apps.folder'
+}
 
 export class DriveFileResource {
 	kind: string
@@ -33,5 +36,9 @@ export class DriveFileResource {
 		this.thumbnailLink = data.thumbnailLink;
 		this.createdTime = data.createdTime;
 		this.modifiedTime = data.modifiedTime;
+	}
+
+	isFolder():boolean {
+		return (this.mimeType && this.mimeType === MIME_TYPES.FOLDER);
 	}
 }

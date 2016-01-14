@@ -90,7 +90,7 @@ export function main() {
 				.equal('mimeType', 'image/gif');
 
       expect(_query.toQuery()).toEqual({
-        'q': 'name="Monkey brains",mimeType="image/gif"'
+        'q': 'name="Monkey brains" and mimeType="image/gif"'
       });
     });
 
@@ -102,7 +102,7 @@ export function main() {
 				.not.equal('mimeType', 'image/gif');
 
       expect(_query.toQuery()).toEqual({
-        'q': 'name!="Monkey brains",mimeType!="image/gif"'
+        'q': 'name!="Monkey brains" and mimeType!="image/gif"'
       });
     });
 
@@ -130,7 +130,21 @@ export function main() {
 				.equal('parents', 'xPKyprusppKelcnMvLmMx89Y4N3CLtbU');
 
       expect(_query.toQuery()).toEqual({
-        'q': 'name!="Monkey brains",mimeType="image/gif","xPKyprusppKelcnMvLmMx89Y4N3CLtbU" in parents'
+        'q': 'name!="Monkey brains" and mimeType="image/gif" and "xPKyprusppKelcnMvLmMx89Y4N3CLtbU" in parents'
+      });
+    });
+
+    it('should mix AND', function() {
+      var _query = new DriveQuery();
+
+      _query
+        .equal('name', 'Monkey brains')
+        .equal('mimeType', 'image/gif')
+        .equal('mimeType', ['image/png', 'image/jpeg'])
+        .not.equal('mimeType', 'image/bmp')
+
+      expect(_query.toQuery()).toEqual({
+        'q': 'name="Monkey brains" and mimeType="image/gif" and (mimeType="image/png" or mimeType="image/jpeg") and mimeType!="image/bmp"'
       });
     });
   });

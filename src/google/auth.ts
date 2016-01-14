@@ -2,7 +2,7 @@
 
 import {API} from 'google/google';
 
-var SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
+var SCOPES = ['https://www.googleapis.com/auth/drive'];
 
 export class Auth {
   scopes: Array<string>;
