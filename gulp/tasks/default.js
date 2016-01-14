@@ -6,6 +6,7 @@
     function d3fault(appConfig) {
         return function () {
             gulp.start('karma');
+            gulp.start('example');
         };
     };
 

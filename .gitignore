@@ -30,17 +30,10 @@ tags
 /coverage/
 test-results.xml
 
-
-## Ignore SSL stuff
-*.csr
-*.crt
-*.key
-
-# Files generated from templates
-/docs/src/templates/index.html
-
-# local nginx conf
-*.ef.com.conf
+# example
+/example/cx
+/example/google
+/example/system.config.js
 
 # schema hardlinks
 *.schema

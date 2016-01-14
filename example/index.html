@@ -5,7 +5,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="app.js"></script>
 	<script src="system.config.js"></script>
-	<script src="../dist/ng.cx.google.drive.js"></script>
+	<!--script src="../dist/ng.cx.google.drive.js"></script-->
 	<script>
 		System.import('cx/googleDrive')
 			.then(function (module) {
@@ -23,7 +23,7 @@
 	<button ng-click="authorize()">authorize</button>
 	<ul>
 		<li ng-repeat="item in items">
-			{{item.title}}
+			<a href="javascript:void(0)" ng-click="get(item.id)">{{item.name}}</a>
 		</li>
 	</ul>
 </div>

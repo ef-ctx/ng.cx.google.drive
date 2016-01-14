@@ -13,13 +13,14 @@ angular.module('ng.cx.google.drive.example', [
 		_auth.checkAuth().then(function () {
 			console.log('logged in!');
 
-			api.load('drive', 'v2').then(function () {
-				drive.list().then(function (items) {
-					$scope.$evalAsync(function () {
-						$scope.items = $scope.items.concat(items);
-					});
+			// api.load('drive', 'v3').then(function () {
+			drive.list().then(function (items) {
+				console.log(items);
+				$scope.$evalAsync(function () {
+					$scope.items = $scope.items.concat(items);
 				});
 			});
+			// });
 
 		}, function (reason) {
 			console.log('NOT logged in :(', reason);
@@ -28,11 +29,16 @@ angular.module('ng.cx.google.drive.example', [
 		$scope.items = [];
 		$scope.msg = 'Hello, earth!';
 		$scope.authorize = authorize;
+		$scope.get = get;
 
 		function authorize() {
 			_auth.authorize().then(function () {
 				$scope.msg = 'Hello, earth!!!';
 			});
+		}
+
+		function get(fileId) {
+			drive.get(fileId);
 		}
 	}
 ]);

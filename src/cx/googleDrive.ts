@@ -6,7 +6,7 @@ export declare var angular: any;
 
 export class GoogleDrive {
     static bootstrap() {
-			API.bootstrap();
+			API.bootstrap('drive');
 
       angular.module('ng.cx.google.drive', [
     	])

@@ -4,14 +4,15 @@ import {API} from 'google';
 import {gapi} from 'test.mocks';
 
 class APIMock extends API {
-	static _add_script_tag(resolve, reject) {
-		this._api_has_loaded(resolve, reject);
+	static _add_script_tag(resolve, reject, preload_api) {
+		this._api_has_loaded(resolve, reject, preload_api);
 	}
 }
 
 export function main() {
 	describe('API', function () {
 		beforeEach(function() {
+			APIMock._api_load_promise = null;
 			spyOn(gapi.client, 'load').and.callThrough();
     });
 
@@ -29,10 +30,19 @@ export function main() {
 			var success = false;
 
 			APIMock.bootstrap().then(function() {
-				APIMock.load('drive', 'v2').then(function() {
+				APIMock.load('drive', 'v3').then(function() {
 					expect(gapi.client.load).toHaveBeenCalled();
 					done();
 				});
+			});
+    });
+
+    it('should pre load api with name and version', function(done) {
+			var success = false;
+
+			APIMock.bootstrap('drive').then(function() {
+				expect(gapi.client.load).toHaveBeenCalled();
+				done();
 			});
     });
 
@@ -40,7 +50,7 @@ export function main() {
 			var success = false;
 
 			API._script_loaded = false;
-			APIMock.load('drive', 'v2').catch(function(reason) {
+			APIMock.load('drive', 'v3').catch(function(reason) {
 				expect(reason).toBe('Google Apis has not been loaded');
 				done();
 			})
