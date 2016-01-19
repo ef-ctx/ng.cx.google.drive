@@ -14,7 +14,7 @@ Add **ng.cx.google.drive** to you project.
 
 Via npm:
 
-```
+```bash
 $ npm install --save ng.cx.google.drive
 ```
 
@@ -22,7 +22,7 @@ $ npm install --save ng.cx.google.drive
 
 #### 1. Add these modules to your html `(index.html)`
 
-```
+```html
 <script src="node_modules/systemjs/dist/system.js"></script>
 <script src="node_modules/ng.cx.google.drive/dist/ng.cx.google.drive.js"></script>
 ```
@@ -31,7 +31,7 @@ $ npm install --save ng.cx.google.drive
 
 #### 3. Tell `SystemJS` that `cx` and `google` has `.js` as file extention.
 
-```
+```html
 <script>
 System.config({
 	packages: {
@@ -44,7 +44,7 @@ System.config({
 
 #### 4. Manually bootstrap your application.
 
-```
+```html
 <script>
 	System.import('cx/googleDrive')
 		.then(function (module) {
@@ -64,7 +64,7 @@ System.config({
 
 Check if a user is authorized or not. If not logg them in.
 
-```
+```javascript
 angular.module('myApp', [
 'ng.cx.google.drive'
 ])
@@ -97,7 +97,7 @@ angular.module('myApp', [
 
 Example of listing files and get a single file
 
-```
+```javascript
 angular.module('myApp', [
 'ng.cx.google.drive'
 ])
