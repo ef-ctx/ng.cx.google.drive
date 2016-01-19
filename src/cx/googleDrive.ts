@@ -10,24 +10,16 @@ export class GoogleDrive {
 
       angular.module('ng.cx.google.drive', [
 			])
-				.service('api', [
+				.service('google', [
 					function() {
-						return API;
-					}
-				])
-				.factory('Auth', [
-					function() {
-						return Auth;
-					}
-				])
-				.service('drive', [
-					function() {
-						return Drive;
-					}
-				])
-				.factory('DriveQuery', [
-					function() {
-						return DriveQuery;
+						'use strict';
+
+						return {
+							'api': API,
+							'Auth': Auth,
+							'drive': Drive,
+							'DriveQuery': DriveQuery
+						};
 					}
 				]);
     }

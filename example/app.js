@@ -13,13 +13,10 @@ angular.module('ng.cx.google.drive.example', [
 .controller('MainCtrl', [
 	'$scope',
 	'$sce',
-	'api',
-	'Auth',
-	'drive',
-	'DriveQuery',
-	function ($scope, $sce, api, Auth, drive, DriveQuery) {
+	'google',
+	function ($scope, $sce, google) {
 		'use strict';
-		var _auth = new Auth(window.CLIENT_ID),
+		var _auth = new google.Auth(window.CLIENT_ID),
 			parent = ['root'];
 
 		$scope.authorized = false;
@@ -74,12 +71,12 @@ angular.module('ng.cx.google.drive.example', [
 				return;
 			}
 
-			var _query = new DriveQuery();
+			var _query = new google.DriveQuery();
 
 			_query.fields(['name', 'thumbnailLink', 'permissions', 'id', 'webContentLink', 'webViewLink', 'mimeType']);
 			_query.fileId(file.id);
 
-			drive.get(_query).then(function (resp) {
+			google.drive.get(_query).then(function (resp) {
 				$scope.$evalAsync(function () {
 					$scope.selectedFile = resp.resource;
 				});
@@ -115,13 +112,13 @@ angular.module('ng.cx.google.drive.example', [
 		}
 
 		function genereatePublicLink() {
-			drive.permissions.create($scope.selectedFile.id, 'anyone', 'reader').then(function () {
+			google.drive.permissions.create($scope.selectedFile.id, 'anyone', 'reader').then(function () {
 				open($scope.selectedFile);
 			});
 		}
 
 		function _loadFiles() {
-			var _query = new DriveQuery();
+			var _query = new google.DriveQuery();
 
 			$scope.allowBack = parent.length > 1;
 			$scope.items = [];
@@ -139,7 +136,7 @@ angular.module('ng.cx.google.drive.example', [
 				.orderBy('folder')
 				.orderBy('name');
 
-			drive.list(_query).then(function (resp) {
+			google.drive.list(_query).then(function (resp) {
 				$scope.$evalAsync(function () {
 					$scope.items = resp.resources;
 				});
