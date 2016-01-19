@@ -20,16 +20,16 @@ $ npm install --save ng.cx.google.drive
 
 `ng.cx.google.drive` uses SystemJS as module loader. This means that we need to do a few things with our AngularJS application to get it to load in the correct order.
 
-### 1. Add these modules to your html `(index.html)`
+#### 1. Add these modules to your html `(index.html)`
 
 ```
 <script src="node_modules/systemjs/dist/system.js"></script>
 <script src="node_modules/ng.cx.google.drive/dist/ng.cx.google.drive.js"></script>
 ```
 
-### 2. Prevent angular from manually bootstrap the application. Remove any `ng-app` directive from you page.
+#### 2. Prevent angular from manually bootstrap the application. Remove any `ng-app` directive from you page.
 
-### 3. Tell `SystemJS` that `cx` and `google` has `.js` as file extention.
+#### 3. Tell `SystemJS` that `cx` and `google` has `.js` as file extention.
 
 ```
 <script>
@@ -42,7 +42,7 @@ System.config({
 </script>
 ```
 
-### 4. Manually bootstrap your application.
+#### 4. Manually bootstrap your application.
 
 ```
 <script>
@@ -60,7 +60,7 @@ System.config({
 </script>
 ```
 
-## Example use of the angular 1.x `ng.cx.google.drive` module
+### Example use of the angular 1.x `ng.cx.google.drive` module
 
 Check if a user is authorized or not. If not logg them in.
 
