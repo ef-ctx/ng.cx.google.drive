@@ -10,7 +10,6 @@ Icon
 .sass-cache/
 .idea/
 /logs/
-dist/
 tmp/
 tags
 
