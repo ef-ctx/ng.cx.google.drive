@@ -1,46 +1,69 @@
 <html>
 <head>
 	<title>ng.cx.google.drive</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans"  type="text/css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.1/angular-material.min.css" />
-
+	<link rel="stylesheet" href="app.css" />
 </head>
-<body>
-	<div ng-controller="MainCtrl" ng-cloak>
-		<h1>ng.cx.google.drive</h1>
+<body ng-controller="MainCtrl" ng-cloak layout="row">
 		<div ng-show="loading">
 			loading...
 		</div>
-		<div ng-show="!loading">
-			<div ng-show="!authorized">
-				<md-button class="md-raised md-primary" ng-click="authorize()">Authorize</md-button>
-			</div>
-			<div layout="row" layout-padding ng-show="authorized">
-				<div flex="33">
-					<md-content>
-				    <md-list>
-				      <md-subheader class="md-no-sticky">{{ items.length }} files</md-subheader>
-				      <md-list-item class="md-2-line" ng-repeat="item in items">
-				        <img ng-src="{{item.thumbnailLink || item.iconLink}}" alt="{{item.name}}" />
-				        <div class="md-list-item-text" layout="row">
-				          <h3>{{ item.name }}</h3>
-				          <md-button ng-click="open(item)">Open</md-button>
-				        </div>
-				      </md-list-item>
-				    </md-list>
-				  </md-content>
-				</div>
-				<div flex="66">
-					<div ng-show="selectedFile">
-						<h2>{{selectedFile.name}}</h2>
-						<p>{{selectedFile.webContentLink}}</p>
-						<md-button ng-click="genereatePublicLink()">genereatePublicLink</md-button>
+		<section layout="row" flex ng-show="!loading">
+			<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
+	      <md-toolbar>
+	      	<div class="md-toolbar-tools">
+		      	<md-button ng-click="back()" ng-disabled="!allowBack">
+		          Back
+		        </md-button>
+		        <h1 class="md-toolbar-tools">{{ items.length }} files</h1>
+	        </div>
+	      </md-toolbar>
+	      <md-content layout-padding>
+	        <div ng-show="!authorized">
+						<md-button class="md-raised md-primary" ng-click="authorize()">Authorize</md-button>
 					</div>
-				</div>
-			</div>
-		</div>
+					<ul class="file-list">
+						<li ng-repeat="item in items" class="list-item" layout>
+							<h4 ng-click="open(item)">
+								<md-tooltip md-direction="right">
+				          {{ item.name }} ({{ item.mimeType }})
+				        </md-tooltip>
+			      		<img ng-src="{{item.iconLink}}" alt="{{item.name}}" />
+			      		<span>{{ item.name }}</span>
+			      	</h4>
+		       </li>
+		      </ul>
+	      </md-content>
+	    </md-sidenav>
+	    <md-content flex ng-if="selectedFile">
+				<md-toolbar>
+			    <div class="md-toolbar-tools">
+			      <h4>{{ selectedFile.name }}</h4>
+
+        		<span flex></span>
+			      <md-button class="md-raised" ng-click="genereatePublicLink()">genereate Public Link</md-button>
+			    </div>
+			  </md-toolbar>
+			  <md-content flex layout-padding class="file-content">
+			  	<md-card>
+			    	<audio controls="controls" ng-if="isAudio(selectedFile)">
+						  Your browser does not support the <code>audio</code> element.
+						  <source ng-src="{{iframeUrl(selectedFile)}}">
+						</audio>
+			    	<img ng-src="{{selectedFile.webContentLink}}" ng-if="isImage(selectedFile)" />
+			    	<video controls="controls" ng-if="isVideo(selectedFile)">
+			    		<source ng-src="{{iframeUrl(selectedFile)}}" type="video/mp4">
+			    	</video>
+			    	<md-button ng-click="openNewWindow(selectedFile)" ng-if="isUnkown(selectedFile)">View</md-button>
+			    	<iframe ng-src="{{ iframeUrl(selectedFile) }}" ng-if="isUnkown(selectedFile)"></iframe>
+		    	</md-card>
+			  </md-content>
+			</md-content>
+		</section>
 	</div>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.16/system.js"></script>
-	<script src="//apis.google.com/js/client.js"></script>
+
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>

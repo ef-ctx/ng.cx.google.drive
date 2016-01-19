@@ -1,0 +1,64 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+	font-size: 1.6rem;
+}
+
+body, h4, h1 {
+	font-family: 'Open Sans', sans-serif;
+}
+
+h4 {
+	font-weight: normal;
+}
+
+.file-list {
+	padding: 0;
+	margin: 0;
+
+	list-style: none;
+}
+
+.file-list .list-item {
+	height: 3rem;
+	line-height: 3rem;
+}
+
+.file-list h4 {
+	padding: 0 1rem;
+	margin: 0;
+
+	position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+
+	cursor: pointer;
+}
+
+.file-list h4 img {
+	display: inline-block;
+	margin-right: 1rem;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.file-list h4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.file-list h4:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.file-content img {
+	max-width: 100%;
+}
+
+.file-content iframe {
+	min-height: 100%;
+}

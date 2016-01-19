@@ -36,16 +36,22 @@ export class API {
 		if (API._script_loaded) {
 			this._api_has_loaded(resolve, reject, preload_api);
 		} else {
-	    var elem = document.createElement('script'),
-	      _readyCallbackName = '__gapi__callback';
+			var _elem = document.createElement('script'),
+				_readyCallbackName = '__gapi__callback',
+				_document = window.document,
+				_node = _document.getElementsByTagName('script')[0];
 
-	    elem.setAttribute('src', '//apis.google.com/js/client.js?onload=' + _readyCallbackName);
-	    elem.setAttribute('defer', null);
-	    elem.setAttribute('async', null);
+			_elem.setAttribute('src', 'https://apis.google.com/js/client.js?onload=' + _readyCallbackName);
+			_elem.async = true;
 
 			window[_readyCallbackName] = () => this._api_has_loaded(resolve, reject, preload_api);
-			window.document.head.appendChild(elem);
-		}
+
+			if (_node) {
+				_node.parentNode.insertBefore(_elem, _node);
+			} else {
+				(_document.head || _document.body || _document.documentElement).appendChild(_elem);
+			}
+    }
   }
 
   static _api_has_loaded(resolve, reject, preload_api:string) {
