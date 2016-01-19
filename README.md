@@ -1,5 +1,5 @@
 # ng.cx.google.drive
-[![Build Status: Linux](http://img.shields.io/travis/ef-ctx/ngAutobahn/master.svg?style=flat-square)](https://travis-ci.org/ef-ctx/ngAutobahn)
+[![Build Status](https://travis-ci.org/ef-ctx/ng.cx.google.drive.svg?branch=master)](https://travis-ci.org/ef-ctx/ng.cx.google.drive)
 
 angular 1.x wrapper for google drive api written in typescript.
 
