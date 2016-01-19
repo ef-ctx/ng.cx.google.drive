@@ -1,10 +1,10 @@
 {
   "name": "ng.cx.google.drive",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "angular 1.0 wrapper for google drive api written in typescript",
-  "license":{
-      "type": "MIT",
-      "url": "https://raw.githubusercontent.com/EFEducationFirstMobile/oss/master/LICENSE"
+  "license": {
+    "type": "MIT",
+    "url": "https://raw.githubusercontent.com/EFEducationFirstMobile/oss/master/LICENSE"
   },
   "scripts": {
     "tsc": "tsc -p src -w",
