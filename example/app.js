@@ -19,7 +19,7 @@ angular.module('ng.cx.google.drive.example', [
 	'DriveQuery',
 	function ($scope, $sce, api, Auth, drive, DriveQuery) {
 		'use strict';
-		var _auth = new Auth('969216875609-3q7nveut98ff6pu0d4aq3encp3nssplm.apps.googleusercontent.com'),
+		var _auth = new Auth(window.CLIENT_ID),
 			parent = ['root'];
 
 		$scope.authorized = false;

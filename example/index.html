@@ -73,6 +73,8 @@
 	<script src="system.config.js"></script>
 	<script src="../dist/ng.cx.google.drive.js"></script>
 	<script>
+		var CLIENT_ID = 'CLIENT_ID';
+
 		System.import('cx/googleDrive')
 			.then(function (module) {
 				module.GoogleDrive.bootstrap();
