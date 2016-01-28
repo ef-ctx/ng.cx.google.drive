@@ -28,6 +28,7 @@ angular.module('ng.cx.google.drive.example', [
 		$scope.back = back;
 		$scope.open = open;
 		$scope.openNewWindow = openNewWindow;
+		$scope.revoke = revoke;
 		$scope.isAudio = isAudio;
 		$scope.isImage = isImage;
 		$scope.isVideo = isVideo;
@@ -35,24 +36,14 @@ angular.module('ng.cx.google.drive.example', [
 		$scope.iframeUrl = iframeUrl;
 		$scope.genereatePublicLink = genereatePublicLink;
 
-		_auth.checkAuth().then(function () {
-			$scope.$evalAsync(function () {
-				$scope.authorized = true;
-				$scope.loading = false;
-			});
-
-			_loadFiles();
-		}, function (reason) {
-			$scope.$evalAsync(function () {
-				$scope.authorized = false;
-				$scope.loading = false;
-			});
-		});
+		_checkAuth();
 
 		function authorize() {
 			_auth.authorize().then(function () {
 				$scope.authorized = true;
 				_loadFiles();
+			}, function (reason) {
+				console.log('reason', reason);
 			});
 		}
 
@@ -91,6 +82,10 @@ angular.module('ng.cx.google.drive.example', [
   		);
 		}
 
+		function revoke() {
+			_auth.signOut().then(_checkAuth, _checkAuth);
+		}
+
 		function isAudio(file) {
 			return /^audio/.test(file.mimeType);
 		}
@@ -114,6 +109,23 @@ angular.module('ng.cx.google.drive.example', [
 		function genereatePublicLink() {
 			google.drive.permissions.create($scope.selectedFile.id, 'anyone', 'reader').then(function () {
 				open($scope.selectedFile);
+			});
+		}
+
+		function _checkAuth() {
+			_auth.checkAuth().then(function () {
+				$scope.$evalAsync(function () {
+					$scope.authorized = true;
+					$scope.loading = false;
+				});
+
+				_loadFiles();
+			}, function (reason) {
+				$scope.$evalAsync(function () {
+					$scope.authorized = false;
+					$scope.loading = false;
+					$scope.items = [];
+				});
 			});
 		}
 

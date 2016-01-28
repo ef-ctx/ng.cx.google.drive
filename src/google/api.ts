@@ -41,10 +41,21 @@ export class API {
 				_document = window.document,
 				_node = _document.getElementsByTagName('script')[0];
 
-			_elem.setAttribute('src', 'https://apis.google.com/js/client.js?onload=' + _readyCallbackName);
+			/**
+			  On a side note: It's impossible to decypher what google js-api to load.
+				`https://apis.google.com/js/api:client.js`
+				or
+				`https://apis.google.com/js/api/client.js`
+				or
+				`https://apis.google.com/js/api/platform.js`
+			 */
+
+			_elem.setAttribute('src', 'https://apis.google.com/js/api:client.js?onload=' + _readyCallbackName);
 			_elem.async = true;
 
-			window[_readyCallbackName] = () => this._api_has_loaded(resolve, reject, preload_api);
+			window[_readyCallbackName] = () => {
+				gapi.load('auth2', () => this._api_has_loaded(resolve, reject, preload_api));
+			}
 
 			if (_node) {
 				_node.parentNode.insertBefore(_elem, _node);

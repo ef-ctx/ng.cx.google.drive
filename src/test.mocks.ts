@@ -9,15 +9,21 @@ export var MOCK_FILE = {
 	"mimeType": "application/vnd.google-apps.document"
 };
 
+function GoogleAuthMock() {
+	this.signIn = () => Promise.resolve(true);
+	this.signOut = () => Promise.resolve(true);
+
+	this.isSignedIn = {
+		'get': () => true
+	}
+
+	this.then = (cb) => cb() && this;
+}
 
 gapi = {
-	'auth': {
-		'authorize': function(opt, callback) {
-			callback({
-				'access_token': 'a',
-				'expires_in': '1',
-				'state': '1'
-			});
+	'auth2': {
+		'init': function () {
+			return new GoogleAuthMock();
 		}
 	},
 	'client': {
