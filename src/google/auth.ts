@@ -56,7 +56,12 @@ export class Auth {
   checkAuth() {
     return new Promise((resolve, reject) => {
     	this._hook.then(() => {
-        this._googleAuth.isSignedIn.get() ? resolve() : reject();
+        var user = this._googleAuth.currentUser.get();
+        if (this._googleAuth.isSignedIn.get() && (user && user.hasGrantedScopes(this.scopes.join(' ')))) {
+          resolve();
+        } else {
+          reject();
+        }
     	});
     });
   }

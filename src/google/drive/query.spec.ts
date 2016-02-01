@@ -118,7 +118,31 @@ export function main() {
 
 			expect(function() {
 				_query.not.equal('parents', 'xPKyprusppKelcnMvLmMx89Y4N3CLtbU');
-			}).toThrow(new Error('DriveQuery: QueryCollectionField only supports operator "in"'));
+			}).toThrow(new Error('DriveQuery: QueryCollectionField only supports OPERATORS.IN'));
+    });
+
+    it('should contains', function() {
+      var _query = new DriveQuery();
+
+      _query
+        .contains('name', 'Monkey brains')
+        .contains('mimeType', 'image/gif');
+
+      expect(_query.toQuery()).toEqual({
+        'q': 'name contains "Monkey brains" and mimeType contains "image/gif"'
+      });
+    });
+
+    it('should not contains', function() {
+      var _query = new DriveQuery();
+
+      _query
+        .not.contains('name', 'Monkey brains')
+        .not.contains('mimeType', 'image/gif');
+
+      expect(_query.toQuery()).toEqual({
+        'q': 'not name contains "Monkey brains" and not mimeType contains "image/gif"'
+      });
     });
 
     it('should mix', function() {

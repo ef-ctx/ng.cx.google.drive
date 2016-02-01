@@ -9,12 +9,20 @@ export var MOCK_FILE = {
 	"mimeType": "application/vnd.google-apps.document"
 };
 
+function GoogleAuthUser() {
+	this.hasGrantedScopes = () => true;
+}
+
 function GoogleAuthMock() {
 	this.signIn = () => Promise.resolve(true);
 	this.signOut = () => Promise.resolve(true);
 
 	this.isSignedIn = {
 		'get': () => true
+	}
+
+	this.currentUser = {
+		'get': () => new GoogleAuthUser()
 	}
 
 	this.then = (cb) => cb() && this;

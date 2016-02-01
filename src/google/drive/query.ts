@@ -1,9 +1,11 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
 const OPERATORS = {
-	'EQUAL': '=',
-	'NOT_EQUAL': '!=',
-	'IN': 'in'
+  'CONTAINS': '{key} contains "{value}"',
+  'NOT_CONTAINS': 'not {key} contains "{value}"',
+  'EQUAL': '{key}="{value}"',
+  'NOT_EQUAL': '{key}!="{value}"',
+	'IN': '"{value}" in {key}'
 }
 
 const DRIVE_QUERY_ORDER_DIRECTION  = {
@@ -66,8 +68,10 @@ class QueryField {
 		this.defaultOperator = defaultOperator;
 		this.operatorValuePair = {};
 
+    this.operatorValuePair[OPERATORS.CONTAINS] = [];
+    this.operatorValuePair[OPERATORS.NOT_CONTAINS] = [];
 		this.operatorValuePair[OPERATORS.EQUAL] = [];
-		this.operatorValuePair[OPERATORS.NOT_EQUAL] = [];
+    this.operatorValuePair[OPERATORS.NOT_EQUAL] = [];
 		this.operatorValuePair[OPERATORS.IN] = [];
 	}
 
@@ -106,7 +110,7 @@ class QueryField {
 					_or = [];
 
 					for (j = 0; j < this.operatorValuePair[_operator][i].length; j += 1) {
-						_or.push(this.key + _operator + '"' + this.operatorValuePair[_operator][i][j] + '"');
+            _or.push(this.constructKeyValueStr(this.key, this.operatorValuePair[_operator][i][j], _operator))
 					}
 
 					_orStr += _or.join(' or ');
@@ -114,7 +118,7 @@ class QueryField {
 
 					_values.push(_orStr);
 				} else {
-					_values.push(this.key + _operator + '"' + this.operatorValuePair[_operator][i] + '"');
+          _values.push(this.constructKeyValueStr(this.key, this.operatorValuePair[_operator][i], _operator));
 				}
 			}
 		}
@@ -125,6 +129,12 @@ class QueryField {
 
 		return _values.join('');
 	}
+
+  constructKeyValueStr(key, value, operator) {
+    var _orStr = operator.replace('{key}', key);
+    _orStr = _orStr.replace('{value}', value);
+    return _orStr;
+  }
 }
 
 class QueryCollectionField extends QueryField {
@@ -135,7 +145,7 @@ class QueryCollectionField extends QueryField {
 
 		for (_operator in this.operatorValuePair) {
 			for (i = 0; i < this.operatorValuePair[_operator].length; i += 1) {
-				_values.push('"' + this.operatorValuePair[_operator][i] + '" ' +_operator + ' ' + this.key);
+        _values.push(this.constructKeyValueStr(this.key, this.operatorValuePair[_operator][i], _operator));
 			}
 		}
 
@@ -321,6 +331,11 @@ export class DriveQuery {
     this._spaces = [];
 	}
 
+
+  contains(prop: string, value: any, operator?: string) {
+    return this.equal(prop, value, OPERATORS.CONTAINS);
+  }
+
   corpus(key: string) {
     if (DRIVE_QUERY_VALID_CORPUS_FIELDS.indexOf(key) === -1) {
       throw new Error('"' + key + '" is not a valid corpus field. Valid fields are ' + DRIVE_QUERY_VALID_CORPUS_FIELDS);
@@ -336,7 +351,7 @@ export class DriveQuery {
 		}
 
 		if (this._queryQ._queryFields[prop] instanceof QueryCollectionField && ((operator || this._queryQ._queryFields[prop].defaultOperator) !== OPERATORS.IN)) {
-			throw new Error('DriveQuery: QueryCollectionField only supports operator "' + OPERATORS.IN + '"');
+			throw new Error('DriveQuery: QueryCollectionField only supports OPERATORS.IN');
 		}
 
 		this._queryQ._queryFields[prop].set(operator, value);
@@ -366,6 +381,7 @@ export class DriveQuery {
 
 	get not(): any {
 		return {
+      'contains': (prop: string, value: any) => this.equal(prop, value, OPERATORS.NOT_CONTAINS),
 			'equal': (prop: string, value: any) => this.equal(prop, value, OPERATORS.NOT_EQUAL)
 		}
 	}
