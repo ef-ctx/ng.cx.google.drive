@@ -24,6 +24,7 @@
   "devDependencies": {
     "es6-promise": "^3.0.2",
     "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
     "gulp-rimraf": "^0.2.0",
     "gulp-typescript": "^2.10.0",
     "jasmine-core": "^2.4.1",
