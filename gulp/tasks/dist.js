@@ -7,12 +7,23 @@
 
 	function dist(appConfig) {
 		return function (cb) {
-			var builder = new Builder(appConfig.output),
+			var builder = new Builder('./src', {
+          'transpiler': 'typescript',
+          'paths': {
+            'cx/*': 'cx/*.ts',
+            'google/*': 'google/*.ts'
+          },
+          'map': {
+            'typescript': './node_modules/typescript/lib/typescript.js'
+          }
+        }),
 				inputPath = appConfig.typescript.inputPath,
 				outputFile = appConfig.dist + 'ng.cx.google.drive.js';
 
-				builder.bundle(inputPath, outputFile,  { minify: true, sourceMaps: true })
-					.then(cb)
+				builder.bundle(inputPath, outputFile,  { format: 'register', minify: true, sourceMaps: true })
+					.then(function () {
+						cb();
+					})
 					.catch(function (ex) {
 						console.log(ex);
 						new Error(ex);

@@ -16,7 +16,7 @@ var config = {
 		]
 	},
 	'typescript': {
-		'inputPath': 'cx/googleDrive.js',
+		'inputPath': 'cx/googleDrive',
 		'systemConfig': 'src/system.config.js',
 		'tsconfig': 'src/tsconfig.json',
 		'tsconfigExample': 'src/tsconfig.example.json'
