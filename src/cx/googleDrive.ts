@@ -7,18 +7,10 @@ export declare var angular: any;
 export class GoogleDrive {
     static bootstrap() {
       API.bootstrap('drive');
-
-      angular.module('ng.cx.google.drive', [
-      ])
-        .service('google', [
-          function() {
-            'use strict';
-
-            this.api = API;
-            this.Auth = Auth;
-            this.drive = Drive;
-            this.DriveQuery = DriveQuery;
-          }
-        ]);
+      window['cxGoogleDrive'] = window['cxGoogleDrive'] || {};
+      window['cxGoogleDrive'].api = API;
+      window['cxGoogleDrive'].Auth = Auth;
+      window['cxGoogleDrive'].drive = Drive;
+      window['cxGoogleDrive'].DriveQuery = DriveQuery;
     }
 }
