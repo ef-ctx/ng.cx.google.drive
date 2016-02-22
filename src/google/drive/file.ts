@@ -1,15 +1,16 @@
+/// <reference path="../../../typings/tsd.d.ts" />
 
 const MIME_TYPES = {
 	'FOLDER': 'application/vnd.google-apps.folder'
 }
 
-interface IVideoMediaMetadata {
+export interface IVideoMediaMetadata {
 	width: number
 	height: number
 	durationMillis: number
 }
 
-class VideoMediaMetadata implements IVideoMediaMetadata {
+export class VideoMediaMetadata implements IVideoMediaMetadata {
 	width: number
 	height: number
 	durationMillis: number

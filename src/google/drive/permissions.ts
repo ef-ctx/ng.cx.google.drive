@@ -1,5 +1,4 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-/// <reference path="../google.d.ts" />
 
 const DRIVE_PERMISSION_ROLES = {
 	'COMMENTER': 'commenter',

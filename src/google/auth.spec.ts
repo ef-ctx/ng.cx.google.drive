@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 import {Auth, API} from 'google';
-import {gapi} from 'test.mocks';
+import {gapi} from 'mocks/test.mocks';
 
 export function main() {
   describe('Auth', function() {

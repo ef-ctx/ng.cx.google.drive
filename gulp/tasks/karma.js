@@ -8,7 +8,7 @@
 			var server = new karmaServer({
 				configFile: __dirname + '/../../karma.conf.js',
 				files: appConfig.vendor.js
-					.concat(['src/test-init.js'])
+					.concat(['./test-init.js'])
 					.concat(appConfig.test.js),
 				singleRun: true
 			}, done);

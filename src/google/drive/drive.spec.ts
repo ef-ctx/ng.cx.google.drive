@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
 import {Drive, DriveQuery} from 'google/google';
-import {gapi} from 'test.mocks';
+import {gapi} from 'mocks/test.mocks';
 
 export function main() {
 	describe('Drive', function() {

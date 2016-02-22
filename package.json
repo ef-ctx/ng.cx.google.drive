@@ -33,6 +33,7 @@
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.3",
     "live-server": "^0.8.2",
+    "merge2": "^1.0.1",
     "phantomjs": "^1.9.19",
     "systemjs-builder": "^0.15.0",
     "typescript": "^1.7.5"

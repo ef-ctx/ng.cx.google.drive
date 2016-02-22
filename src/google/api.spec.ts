@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 import {API} from 'google';
-import {gapi} from 'test.mocks';
+import {gapi} from 'mocks/test.mocks';
 
 class APIMock extends API {
 	static _add_script_tag(resolve, reject, preload_api) {

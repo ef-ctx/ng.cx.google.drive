@@ -6,7 +6,6 @@
     function example(appConfig) {
         return function () {
             gulp.start('example-typescript');
-            gulp.start('copy-system-config');
         };
     };
 

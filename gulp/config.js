@@ -19,9 +19,13 @@ var config = {
 		'inputPath': 'cx/googleDrive',
 		'systemConfig': 'src/system.config.js',
 		'tsconfig': 'src/tsconfig.json',
-		'tsconfigExample': 'src/tsconfig.example.json'
+		'tsconfigDist': 'src/tsconfig.dist.json',
+    'tsconfigExample': 'src/tsconfig.example.json'
 	},
 	'test': {
+    'mocks': [
+      'mocks/*.ts'
+    ],
 		'js': [
 			{
 				pattern: 'build/**/*.js',

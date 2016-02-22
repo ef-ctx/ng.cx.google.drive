@@ -13,7 +13,7 @@ enum DRIVE_API_ACTIONS {
 		LIST
 }
 
-interface DriveApiResponse {
+export interface DriveApiResponse {
   query: DriveQuery;
   resource?: DriveFileResource;
   resources?: DriveFileResource[];

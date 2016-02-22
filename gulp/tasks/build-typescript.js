@@ -2,15 +2,15 @@
 	'use strict';
 
 	var gulp = require('gulp'),
-	ts = require('gulp-typescript');
+	 ts = require('gulp-typescript');
 
 	function buildTypescript(appConfig) {
 
 		return function () {
 			var tsProject = ts.createProject(appConfig.typescript.tsconfig),
-				result = tsProject.src().pipe(ts(tsProject));
+        result = tsProject.src().pipe(ts(tsProject));
 
-			return result.js.pipe(gulp.dest(appConfig.output));
+			return result.js.pipe(gulp.dest(appConfig.output))
 		};
 	};
 

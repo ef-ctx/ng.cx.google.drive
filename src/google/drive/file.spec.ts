@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
 import {DriveFileResource} from './file';
-import {gapi, MOCK_FILE} from 'test.mocks';
+import {gapi, MOCK_FILE} from 'mocks/test.mocks';
 
 export function main() {
 	describe('DriveFileResource', function() {

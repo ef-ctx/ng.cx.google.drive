@@ -26,13 +26,13 @@ tags
 
 # builds and test related
 /build/
+/dist/
 /coverage/
 test-results.xml
 
 # example
 /example/cx
 /example/google
-/example/system.config.js
 
 # schema hardlinks
 *.schema
