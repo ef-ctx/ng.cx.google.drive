@@ -1,6 +1,6 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path="../../../../typings/tsd.d.ts" />
 
-import {DriveFileResource} from './file';
+import {DriveFileResource} from 'cx/google/drive/file';
 import {gapi, MOCK_FILE} from 'mocks/test.mocks';
 
 export function main() {

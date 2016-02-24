@@ -12,8 +12,6 @@ System.config({
   defaultJSExtensions: true,
   paths: {
     'cx/*': 'build/cx/*.js',
-    'google/*': 'build/google/*.js',
-    'google': 'build/google/google.js',
     'mocks/*': 'build/mocks/*.js'
   }
 });

@@ -1,4 +1,19 @@
-angular.module('ng.cx.google.drive.example', [
+angular.module('ng.cx.google.drive', [
+])
+
+.service('google', [
+  '$window',
+  function ($window) {
+   'use strict';
+
+   this.Auth = $window.cx.google.Auth;
+   this.client = $window.cx.google.client;
+   this.drive = $window.cx.google.drive.files;
+   this.DriveQuery = $window.cx.google.drive.DriveQuery;
+  }
+]);
+
+angular.module('cx.google.drive.example', [
 	'ngMaterial',
 	'ng.cx.google.drive',
 ])

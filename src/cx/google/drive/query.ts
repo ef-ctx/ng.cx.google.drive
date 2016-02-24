@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path="../../../../typings/tsd.d.ts" />
 
 const OPERATORS = {
   'CONTAINS': '{key} contains "{value}"',
