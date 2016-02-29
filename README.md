@@ -1,10 +1,6 @@
 # cx.google.drive
 [![Build Status](https://travis-ci.org/ef-ctx/cx.google.drive.svg?branch=master)](https://travis-ci.org/ef-ctx/cx.google.drive)
 
-angular 1.x wrapper for google drive api written in typescript.
-
-> ###DESCRIPTION###
-
 Provides a wrapper around Google Drives v3 REST api.
 
 
