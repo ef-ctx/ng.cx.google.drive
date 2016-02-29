@@ -1,6 +1,7 @@
 System.config({
 	packages: {
-		'cx': {defaultExtension: 'js'},
-		'google': {defaultExtension: 'js'}
+    'cx/google/drive': {
+      defaultExtension: 'js',
+    }
 	}
 });

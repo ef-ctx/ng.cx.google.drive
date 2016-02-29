@@ -1,72 +1,93 @@
-# ng.cx.google.drive
-[![Build Status](https://travis-ci.org/ef-ctx/ng.cx.google.drive.svg?branch=master)](https://travis-ci.org/ef-ctx/ng.cx.google.drive)
+# cx.google.drive
+[![Build Status](https://travis-ci.org/ef-ctx/cx.google.drive.svg?branch=master)](https://travis-ci.org/ef-ctx/cx.google.drive)
 
 angular 1.x wrapper for google drive api written in typescript.
 
 > ###DESCRIPTION###
 
-Provides a wrapper around Google Drives v3 REST api, and exports it in angular 1.0 modules:
+Provides a wrapper around Google Drives v3 REST api.
 
 
 ## Getting Started
 
-Add **ng.cx.google.drive** to you project.
+This part describes how to load the cx.google.* modules and bootstrap a angular 1.x application.
+Add **cx.google.drive** to you project.
 
 Via npm:
 
 ```bash
-$ npm install --save ng.cx.google.drive
+$ npm install --save cx.google.drive
 ```
 
-`ng.cx.google.drive` uses SystemJS as module loader. This means that we need to do a few things with our AngularJS application to get it to load in the correct order.
+`cx.google.drive` uses SystemJS as module loader. This means that we need to do a few things with our AngularJS application to get it to load in the correct order.
 
 #### 1. Add these modules to your html `(index.html)`
 
 ```html
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="node_modules/systemjs/dist/system.js"></script>
-<script src="node_modules/ng.cx.google.drive/dist/ng.cx.google.drive.js"></script>
+<script src="node_modules/cx.google.core/bundles/cx.google.core.js"></script>
+<script src="node_modules/cx.google.drive/bundles/cx.google.drive.js"></script>
 ```
 
 #### 2. Prevent angular from manually bootstrap the application. Remove any `ng-app` directive from you page.
 
-#### 3. Tell `SystemJS` that `cx` and `google` has `.js` as file extention.
+#### 3. Tell `SystemJS` about `cx/google/drive`.
 
 ```html
 <script>
 System.config({
-	packages: {
-		'cx': {defaultExtension: 'js'},
-		'google': {defaultExtension: 'js'}
-	}
+  packages: {
+    'cx/google/drive': {
+      defaultExtension: 'js',
+    }
+  }
 });
 </script>
 ```
 
-#### 4. Manually bootstrap your application.
+#### 4. Load cx.google.core and cx.google.drive then manually bootstrap your application.
 
 ```html
 <script>
-	System.import('cx/googleDrive')
-		.then(function (module) {
-			// This will create the angular 1.x modules before the applcation is bootstraped.
-			// it will also add the google script tags and load the driver api.
-			module.GoogleDrive.bootstrap();
+  Promise.all([
+    System.import('cx/google/core'),
+    System.import('cx/google/drive/drive')
+  ])
+    .then(function (modules) {
+      var core = modules[0]; // the cx.google.core module.
+      core.Client.bootstrap('drive'); // Load the google api client then the drive api.
 
-			// Manually bootstrap you application
-			angular.element(document).ready(function() {
-			    angular.bootstrap(document, ['myApp']);
-			});
-		});
+      angular.element(document).ready(function() {
+          angular.bootstrap(document, ['cx.google.drive.example']);
+      });
+    });
 </script>
 ```
 
-### Example use of the angular 1.x `ng.cx.google.drive` module
+### Example use with a angular 1.x service to that consumes `cx.google.*` 
 
 Check if a user is authorized or not. If not logg them in.
 
 ```javascript
+
+angular.module('ng.cx.google.drive', [
+])
+
+.service('google', [
+  '$window',
+  function ($window) {
+   'use strict';
+
+   this.Auth = $window.cx.google.Auth;
+   this.client = $window.cx.google.client;
+   this.drive = $window.cx.google.drive.files;
+   this.DriveQuery = $window.cx.google.drive.DriveQuery;
+  }
+]);
+
 angular.module('myApp', [
-'ng.cx.google.drive'
+  'ng.cx.google.drive'
 ])
 
 .controller('MainCtrl', [
@@ -104,9 +125,9 @@ angular.module('myApp', [
 
 .controller('MainCtrl', [
 	'$scope',
-	'drive',
+	'files',
 	'DriveQuery',
-	function ($scope, drive, DriveQuery) {
+	function ($scope, files, DriveQuery) {
 		'use strict';
 		var _query = new DriveQuery();
 
@@ -135,7 +156,7 @@ angular.module('myApp', [
 		_query.orderBy('folder').orderBy('name');
 
 		// Now we can perform the query
-		drive.list(_query)
+		files.list(_query)
 			.then(handleResults);
 
 		function handleResults(result) {
@@ -147,7 +168,7 @@ angular.module('myApp', [
 			var _getFilequery = new DriveQuery();
 			_getFilequery.fileId(result.resources[0].id);
 
-			drive.get(_getFilequery)
+			files.get(_getFilequery)
 				.then(function (result) {
 					// `result` contains a `.query` and `.resource`;
 					// Notice the difference between a `.get` and a `.list`.

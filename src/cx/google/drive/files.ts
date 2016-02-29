@@ -1,8 +1,8 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path="../../../../typings/tsd.d.ts" />
 
-import {DriveQuery} from './query';
-import {DriveFileResource} from './file';
-import {DrivePermissions} from './permissions';
+import {DriveQuery} from 'cx/google/drive/query';
+import {DriveFileResource} from 'cx/google/drive/file';
+import {DrivePermissions} from 'cx/google/drive/permissions';
 
 const DRIVE_ERROR = {
 	'UNKONW_ACTION': new Error('Can\'t handle result for unkown action')
@@ -19,7 +19,7 @@ export interface DriveApiResponse {
   resources?: DriveFileResource[];
 }
 
-export class Drive {
+export class Files {
   static permissions: DrivePermissions = DrivePermissions;
 
 	private static _nextPageToken: string;
