@@ -10,11 +10,28 @@ var config = {
 		]
 	},
 	'src': {
-		'ts': [
-			'src/*.ts',
-			'src/**/*.ts'
-		]
-	},
+    'ts': [
+      'src/*.ts',
+      'src/**/*.ts',
+      '!src/example.ts',
+    ],
+    'distTs': [
+      'src/*.ts',
+      'src/**/*.ts',
+      '!src/**/*.spec.ts',
+      '!src/example.ts',
+      '!src/mocks/*.ts',
+    ],
+    'exampleTs': [
+      'src/*.ts',
+      'src/**/*.ts',
+      '!src/**/*.spec.ts',
+      '!src/mocks/*.ts',
+    ],
+    'typings': [
+      'typings/tsd.d.ts'
+    ]
+  },
 	'typescript': {
 		'inputPath': 'cx/google/drive',
 		'systemConfig': 'src/system.config.js',

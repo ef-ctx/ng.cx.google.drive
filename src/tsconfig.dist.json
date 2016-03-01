@@ -8,10 +8,5 @@
     "removeComments": false,
     "noImplicitAny": false,
     "declaration": true
-  },
-  "exclude": [
-  	"mocks/test.mocks.ts",
-  	"*.spec.ts",
-  	"**/*.spec.ts"
-  ]
+  }
 }
