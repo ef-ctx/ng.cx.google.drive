@@ -1,23 +1,14 @@
+/// <reference path="../typings/tsd.d.ts" />
+
 declare var angular: any;
 declare var CLIENT_ID: any;
 declare var System: any;
 
-import {DriveQuery, Files} from 'cx/google/drive/drive';
+import {Auth} from 'cx/google/core';
 import {DriveFileResource} from 'cx/google/drive/file';
-import {DrivePermissions} from 'cx/google/drive/permissions';
-
-class CxGoogle {
-  private $window: Window;
-
-  static $inject: string[] = ['$window'];
-  constructor($window) {
-    this.$window = $window;
-  }
-
-  get Auth() {
-    return this.$window.cx.google.Auth;
-  }
-}
+import {Files} from 'cx/google/drive/files';
+import {DrivePermissions} from 'cx/google/drive/permissions'
+import {DriveQuery} from 'cx/google/drive/query';
 
 class ExampleConfig {
   static $inject: string[] = ['$sceProvider'];
@@ -27,7 +18,7 @@ class ExampleConfig {
 }
 
 class CxGoogleDriveExampleCtrl {
-  private auth: any;
+  private auth: Auth;
   private parent: string[];
   private $scope: any;
 
@@ -37,9 +28,9 @@ class CxGoogleDriveExampleCtrl {
   loading: boolean;
   selectedFile: DriveFileResource;
 
-  static $inject: string[] = ['$scope', '$sce', 'google'];
-  constructor($scope, $sce, google) {
-    this.auth = new google.Auth(CLIENT_ID);
+  static $inject: string[] = ['$scope', '$sce'];
+  constructor($scope, $sce) {
+    this.auth = new Auth(CLIENT_ID);
     this.parent = ['root'];
     this.$scope = $scope;
 
@@ -194,12 +185,8 @@ class CxGoogleDriveExampleCtrl {
   }
 }
 
-angular.module('ng.cx.google.drive', [])
-  .service('google', CxGoogle);
-
 export default angular.module('cx.google.drive.example', [
   'ngMaterial',
-  'ng.cx.google.drive',
 ])
   .config(ExampleConfig)
   .controller('cxGoogleDriveExampleCtrl', CxGoogleDriveExampleCtrl)

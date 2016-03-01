@@ -1,31 +1,24 @@
-System.register(['cx/google/drive/drive', 'cx/google/drive/permissions'], function(exports_1, context_1) {
+/// <reference path="../typings/tsd.d.ts" />
+System.register(['cx/google/core', 'cx/google/drive/files', 'cx/google/drive/permissions', 'cx/google/drive/query'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var drive_1, permissions_1;
-    var CxGoogle, ExampleConfig, CxGoogleDriveExampleCtrl;
+    var core_1, files_1, permissions_1, query_1;
+    var ExampleConfig, CxGoogleDriveExampleCtrl;
     return {
         setters:[
-            function (drive_1_1) {
-                drive_1 = drive_1_1;
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
+            function (files_1_1) {
+                files_1 = files_1_1;
             },
             function (permissions_1_1) {
                 permissions_1 = permissions_1_1;
+            },
+            function (query_1_1) {
+                query_1 = query_1_1;
             }],
         execute: function() {
-            CxGoogle = (function () {
-                function CxGoogle($window) {
-                    this.$window = $window;
-                }
-                Object.defineProperty(CxGoogle.prototype, "Auth", {
-                    get: function () {
-                        return this.$window.cx.google.Auth;
-                    },
-                    enumerable: true,
-                    configurable: true
-                });
-                CxGoogle.$inject = ['$window'];
-                return CxGoogle;
-            }());
             ExampleConfig = (function () {
                 function ExampleConfig($sceProvider) {
                     $sceProvider.enabled(false);
@@ -34,8 +27,8 @@ System.register(['cx/google/drive/drive', 'cx/google/drive/permissions'], functi
                 return ExampleConfig;
             }());
             CxGoogleDriveExampleCtrl = (function () {
-                function CxGoogleDriveExampleCtrl($scope, $sce, google) {
-                    this.auth = new google.Auth(CLIENT_ID);
+                function CxGoogleDriveExampleCtrl($scope, $sce) {
+                    this.auth = new core_1.Auth(CLIENT_ID);
                     this.parent = ['root'];
                     this.$scope = $scope;
                     this.authorized = false;
@@ -123,7 +116,7 @@ System.register(['cx/google/drive/drive', 'cx/google/drive/permissions'], functi
                     }
                 };
                 CxGoogleDriveExampleCtrl.prototype.loadFiles = function () {
-                    var self = this, $scope = this.$scope, query = new drive_1.DriveQuery();
+                    var self = this, $scope = this.$scope, query = new query_1.DriveQuery();
                     this.allowBack = this.parent.length > 1;
                     this.items = [];
                     query.fields([
@@ -138,7 +131,7 @@ System.register(['cx/google/drive/drive', 'cx/google/drive/permissions'], functi
                         .equal('mimeType', ['application/vnd.google-apps.folder', 'audio/mpeg', 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'application/pdf', 'video/mp4'])
                         .orderBy('folder')
                         .orderBy('name');
-                    drive_1.Files.list(query).then(_showFiles);
+                    files_1.Files.list(query).then(_showFiles);
                     function _showFiles(resp) {
                         $scope.$evalAsync(function () {
                             self.items = resp.resources;
@@ -146,24 +139,21 @@ System.register(['cx/google/drive/drive', 'cx/google/drive/permissions'], functi
                     }
                 };
                 CxGoogleDriveExampleCtrl.prototype.openFile = function (file) {
-                    var self = this, $scope = this.$scope, query = new drive_1.DriveQuery();
+                    var self = this, $scope = this.$scope, query = new query_1.DriveQuery();
                     query.fields(['name', 'thumbnailLink', 'permissions', 'id', 'webContentLink', 'webViewLink', 'mimeType']);
                     query.fileId(file.id);
-                    drive_1.Files.get(query).then(_showFile);
+                    files_1.Files.get(query).then(_showFile);
                     function _showFile(resp) {
                         $scope.$evalAsync(function () {
                             self.selectedFile = resp.resource;
                         });
                     }
                 };
-                CxGoogleDriveExampleCtrl.$inject = ['$scope', '$sce', 'google'];
+                CxGoogleDriveExampleCtrl.$inject = ['$scope', '$sce'];
                 return CxGoogleDriveExampleCtrl;
             }());
-            angular.module('ng.cx.google.drive', [])
-                .service('google', CxGoogle);
             exports_1("default",angular.module('cx.google.drive.example', [
                 'ngMaterial',
-                'ng.cx.google.drive',
             ])
                 .config(ExampleConfig)
                 .controller('cxGoogleDriveExampleCtrl', CxGoogleDriveExampleCtrl)

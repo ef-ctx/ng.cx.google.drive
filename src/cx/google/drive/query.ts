@@ -1,5 +1,3 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
-
 const OPERATORS = {
   'CONTAINS': '{key} contains "{value}"',
   'NOT_CONTAINS': 'not {key} contains "{value}"',
