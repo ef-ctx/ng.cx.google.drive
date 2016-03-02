@@ -33,6 +33,7 @@ test-results.xml
 # example
 /example/cx
 /example/google
+/example/example.js
 
 # schema hardlinks
 *.schema

@@ -10,8 +10,7 @@
       var builder = new Builder('./src', {
           'transpiler': 'typescript',
           'paths': {
-            'cx/*': 'cx/*.ts',
-            'google/*': 'google/*.ts'
+            'cx/*': 'cx/*.ts'
           },
           'map': {
             'typescript': './node_modules/typescript/lib/typescript.js'
