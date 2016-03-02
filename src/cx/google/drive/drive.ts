@@ -1,10 +1,11 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
+import {Files} from './files';
+import {DriveQuery} from './query';
 
-import {Files} from 'cx/google/drive/files';
-import {DriveQuery} from 'cx/google/drive/query';
+export {Files} from './files';
+export {DriveFileResource} from './file';
+export {DrivePermissions} from './permissions';
+export {DriveQuery} from './query';
 
-export {Files} from 'cx/google/drive/files';
-export {DriveQuery} from 'cx/google/drive/query';
 
 window.cx = window.cx || {};
 window.cx.google = window.cx.google || {};

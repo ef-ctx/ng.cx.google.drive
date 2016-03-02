@@ -1,5 +1,3 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
-
 const DRIVE_PERMISSION_ROLES = {
 	'COMMENTER': 'commenter',
 	'OWNER': 'owner',

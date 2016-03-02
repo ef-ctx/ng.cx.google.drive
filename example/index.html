@@ -5,30 +5,30 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.1/angular-material.min.css" />
 	<link rel="stylesheet" href="app.css" />
 </head>
-<body ng-controller="MainCtrl" ng-cloak layout="row">
-		<div ng-show="loading">
+<body cx-google-drive-example ng-cloak layout="row">
+		<div ng-show="ctrl.loading">
 			loading...
 		</div>
-		<section layout="row" flex ng-show="!loading">
+		<section layout="row" flex ng-show="!ctrl.loading">
 			<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
 	      <md-toolbar>
 	      	<div class="md-toolbar-tools">
-		      	<md-button ng-click="back()" ng-disabled="!allowBack">
+		      	<md-button ng-click="ctrl.back()" ng-disabled="!ctrl.allowBack">
 		          Back
 		        </md-button>
-		        <h1 class="md-toolbar-tools">{{ items.length }} files</h1>
-		        <md-button ng-click="revoke()">
+		        <h1 class="md-toolbar-tools">{{ ctrl.items.length }} files</h1>
+		        <md-button ng-click="ctrl.revoke()">
 		          Revoke
 		        </md-button>
 	        </div>
 	      </md-toolbar>
 	      <md-content layout-padding>
-	        <div ng-show="!authorized">
-						<md-button class="md-raised md-primary" ng-click="authorize()">Authorize</md-button>
+	        <div ng-show="!ctrl.authorized">
+						<md-button class="md-raised md-primary" ng-click="ctrl.authorize()">Authorize</md-button>
 					</div>
 					<ul class="file-list">
-						<li ng-repeat="item in items" class="list-item" layout>
-							<h4 ng-click="open(item)">
+						<li ng-repeat="item in ctrl.items" class="list-item" layout>
+							<h4 ng-click="ctrl.open(item)">
 								<md-tooltip md-direction="right">
 				          {{ item.name }} ({{ item.mimeType }})
 				        </md-tooltip>
@@ -39,27 +39,27 @@
 		      </ul>
 	      </md-content>
 	    </md-sidenav>
-	    <md-content flex ng-if="selectedFile">
+	    <md-content flex ng-if="ctrl.selectedFile">
 				<md-toolbar>
 			    <div class="md-toolbar-tools">
-			      <h4>{{ selectedFile.name }}</h4>
+			      <h4>{{ ctrl.selectedFile.name }}</h4>
 
         		<span flex></span>
-			      <md-button class="md-raised" ng-click="genereatePublicLink()">genereate Public Link</md-button>
+			      <md-button class="md-raised" ng-click="ctrl.genereatePublicLink(ctrl.selectedFile)">genereate Public Link</md-button>
 			    </div>
 			  </md-toolbar>
 			  <md-content flex layout-padding class="file-content">
 			  	<md-card>
-			    	<audio controls="controls" ng-if="isAudio(selectedFile)">
+			    	<audio controls="controls" ng-if="ctrl.isAudio(ctrl.selectedFile)">
 						  Your browser does not support the <code>audio</code> element.
-						  <source ng-src="{{iframeUrl(selectedFile)}}">
+						  <source ng-src="{{ctrl.iframeUrl(ctrl.selectedFile)}}">
 						</audio>
-			    	<img ng-src="{{selectedFile.webContentLink}}" ng-if="isImage(selectedFile)" />
-			    	<video controls="controls" ng-if="isVideo(selectedFile)">
-			    		<source ng-src="{{iframeUrl(selectedFile)}}" type="video/mp4">
+			    	<img ng-src="{{ctrl.selectedFile.webContentLink}}" ng-if="ctrl.isImage(ctrl.selectedFile)" />
+			    	<video controls="controls" ng-if="ctrl.isVideo(ctrl.selectedFile)">
+			    		<source ng-src="{{ctrl.iframeUrl(ctrl.selectedFile)}}" type="video/mp4">
 			    	</video>
-			    	<md-button ng-click="openNewWindow(selectedFile)" ng-if="isUnkown(selectedFile)">View</md-button>
-			    	<iframe ng-src="{{ iframeUrl(selectedFile) }}" ng-if="isUnkown(selectedFile)"></iframe>
+			    	<md-button ng-click="ctrl.openNewWindow(selectedFile)" ng-if="ctrl.isUnkown(ctrl.selectedFile)">View</md-button>
+			    	<iframe ng-src="{{ ctrl.iframeUrl(ctrl.selectedFile) }}" ng-if="ctrl.isUnkown(ctrl.selectedFile)"></iframe>
 		    	</md-card>
 			  </md-content>
 			</md-content>
@@ -73,20 +73,22 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-	<script src="app.js"></script>
 	<script src="system.config.js"></script>
+  <!-- <script src="../dist/bundles/cx.google.drive.js"></script> -->
 	<script>
 		var CLIENT_ID = '969216875609-84e1bbv0kvo0u9f6mo93i8mqci8st48b.apps.googleusercontent.com';
     Promise.all([
       System.import('cx/google/core'),
-      System.import('cx/google/drive/drive')
+      System.import('example')
     ])
 			.then(function (modules) {
-        var core = modules[0];
+        var core = modules[0],
+          app = modules[1].default;
+
         core.Client.bootstrap('drive');
 
 				angular.element(document).ready(function() {
-				    angular.bootstrap(document, ['cx.google.drive.example']);
+				    angular.bootstrap(document, [app.name]);
 				});
 			});
 	</script>

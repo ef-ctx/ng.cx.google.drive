@@ -1,21 +1,21 @@
 (function () {
-	'use strict';
+  'use strict';
 
-	var gulp = require('gulp'),
-	 ts = require('gulp-typescript');
+  var gulp = require('gulp'),
+   ts = require('gulp-typescript');
 
-	function buildTypescript(appConfig) {
+  function buildTypescript(appConfig) {
+    return function () {
+      var tsProject = ts.createProject(appConfig.typescript.tsconfig),
+        files = appConfig.src.ts.concat(appConfig.src.typings),
+        result = gulp.src(files).pipe(ts(tsProject.options));
 
-		return function () {
-			var tsProject = ts.createProject(appConfig.typescript.tsconfig),
-        result = tsProject.src().pipe(ts(tsProject));
+      return result.js.pipe(gulp.dest(appConfig.output));
+    }
+  };
 
-			return result.js.pipe(gulp.dest(appConfig.output))
-		};
-	};
-
-	exports.task = buildTypescript;
-	exports.dependencies = [
-		'clean'
-	];
+  exports.task = buildTypescript;
+  exports.dependencies = [
+    'clean'
+  ];
 }());

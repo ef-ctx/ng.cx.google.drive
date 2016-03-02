@@ -1,8 +1,6 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
-
-import {DriveQuery} from 'cx/google/drive/query';
-import {DriveFileResource} from 'cx/google/drive/file';
-import {DrivePermissions} from 'cx/google/drive/permissions';
+import {DriveQuery} from './query';
+import {DriveFileResource} from './file';
+import {DrivePermissions} from './permissions';
 
 const DRIVE_ERROR = {
 	'UNKONW_ACTION': new Error('Can\'t handle result for unkown action')

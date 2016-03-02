@@ -87,11 +87,11 @@ angular.module('myApp', [
 ])
 
 .controller('MainCtrl', [
-	'Auth',
-	function (Auth) {
+	'google',
+	function (google) {
 		'use strict';
 		// Read here how to create your clientId https://developers.google.com/drive/v3/web/quickstart/js
-		var _auth = new Auth('YOUR_CLIENT_ID');
+		var _auth = new google.Auth('YOUR_CLIENT_ID');
 
 		_auth.checkAuth()
 			.then(loggedIn)
@@ -121,11 +121,10 @@ angular.module('myApp', [
 
 .controller('MainCtrl', [
 	'$scope',
-	'files',
-	'DriveQuery',
-	function ($scope, files, DriveQuery) {
+	'google',
+	function ($scope,) {
 		'use strict';
-		var _query = new DriveQuery();
+		var _query = new google.DriveQuery();
 
 		// If we don't specify fields, Google Drive REST API will by default return only `kind`, `id`, `name`, `mimeType`.
 		// We want the icon and thumbnail as well so we need to define all fields.
@@ -152,7 +151,7 @@ angular.module('myApp', [
 		_query.orderBy('folder').orderBy('name');
 
 		// Now we can perform the query
-		files.list(_query)
+		google.files.list(_query)
 			.then(handleResults);
 
 		function handleResults(result) {
@@ -164,7 +163,7 @@ angular.module('myApp', [
 			var _getFilequery = new DriveQuery();
 			_getFilequery.fileId(result.resources[0].id);
 
-			files.get(_getFilequery)
+			google.files.get(_getFilequery)
 				.then(function (result) {
 					// `result` contains a `.query` and `.resource`;
 					// Notice the difference between a `.get` and a `.list`.

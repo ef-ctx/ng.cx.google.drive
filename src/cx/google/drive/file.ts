@@ -1,5 +1,3 @@
-/// <reference path="../../../../typings/tsd.d.ts" />
-
 const MIME_TYPES = {
 	'FOLDER': 'application/vnd.google-apps.folder'
 }

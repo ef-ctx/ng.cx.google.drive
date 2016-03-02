@@ -10,17 +10,35 @@ var config = {
 		]
 	},
 	'src': {
-		'ts': [
-			'src/*.ts',
-			'src/**/*.ts'
-		]
-	},
+    'distTs': [
+      'src/*.ts',
+      'src/**/*.ts',
+      '!src/**/*.spec.ts',
+      '!src/example.ts',
+      '!src/mocks/*.ts',
+    ],
+    'distTypings': [
+      'src/cx/google/drive/*.d.ts'
+    ],
+    'exampleTs': [
+      'src/*.ts',
+      'src/**/*.ts',
+      '!src/**/*.spec.ts',
+      '!src/mocks/*.ts',
+    ],
+    'ts': [
+      'src/*.ts',
+      'src/**/*.ts',
+      '!src/example.ts',
+    ],
+    'typings': [
+      'typings/tsd.d.ts'
+    ]
+  },
 	'typescript': {
-		'inputPath': 'cx/google/drive',
+		'inputPath': 'cx/google/drive/drive',
 		'systemConfig': 'src/system.config.js',
-		'tsconfig': 'src/tsconfig.json',
-		'tsconfigDist': 'src/tsconfig.dist.json',
-    'tsconfigExample': 'src/tsconfig.example.json'
+		'tsconfig': 'src/tsconfig.json'
 	},
 	'test': {
     'mocks': [

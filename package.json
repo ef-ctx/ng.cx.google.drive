@@ -20,6 +20,7 @@
   "author": "",
   "dependencies": {
     "cx.google.core": "^1.0.2",
+    "gulp-sourcemaps": "^1.6.0",
     "systemjs": "0.19.2"
   },
   "devDependencies": {
