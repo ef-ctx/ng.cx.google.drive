@@ -85,7 +85,7 @@
         var core = modules[0],
           app = modules[1].default;
 
-        core.Client.bootstrap('drive');
+        core.Client.load('drive');
 
 				angular.element(document).ready(function() {
 				    angular.bootstrap(document, [app.name]);
