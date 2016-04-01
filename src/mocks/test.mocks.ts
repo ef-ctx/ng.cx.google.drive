@@ -1,4 +1,4 @@
-/// <reference path='../../typings/tsd.d.ts' />
+/// <reference path='../../typings/browser.d.ts' />
 
 export declare var gapi: any;
 

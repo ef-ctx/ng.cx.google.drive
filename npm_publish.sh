@@ -37,8 +37,8 @@ gulp dist
 
 npm version $NPM_BUMP -m "chore(release): %s"
 
-cp package.json $NPM_DIR
 cp README.md $NPM_DIR
+gulp dist-package-json
 
 npm publish $NPM_DIR
 git push --tags

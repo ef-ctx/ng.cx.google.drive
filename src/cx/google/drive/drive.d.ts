@@ -1,25 +1,18 @@
-declare module 'cx/google/drive/drive' {
-  import {Files} from 'cx/google/drive/files';
-  import {DriveFileResource} from 'cx/google/drive/file';
-  import {DrivePermissions} from 'cx/google/drive/permissions';
-  import {DriveQuery} from 'cx/google/drive/query';
-}
-
 declare module 'cx/google/drive/file' {
-  interface IVideoMediaMetadata {
+  export interface IVideoMediaMetadata {
     width: number;
     height: number;
     durationMillis: number;
   }
 
-  class VideoMediaMetadata implements IVideoMediaMetadata {
+  export class VideoMediaMetadata implements IVideoMediaMetadata {
     width: number;
     height: number;
     durationMillis: number;
     constructor(data: IVideoMediaMetadata);
   }
 
-  class DriveFileResource {
+  export class DriveFileResource {
     kind: string;
     id: string;
     name: string;
@@ -46,13 +39,13 @@ declare module 'cx/google/drive/files' {
   import { DriveFileResource } from 'cx/google/drive/file';
   import { DrivePermissions } from 'cx/google/drive/permissions';
 
-  interface DriveApiResponse {
+  export interface DriveApiResponse {
     query: DriveQuery;
     resource?: DriveFileResource;
     resources?: DriveFileResource[];
   }
 
-  class Files {
+  export class Files {
     static permissions: DrivePermissions;
     private static _nextPageToken;
     static get(query?: DriveQuery): Promise<DriveApiResponse>;
@@ -65,7 +58,7 @@ declare module 'cx/google/drive/files' {
 }
 
 declare module 'cx/google/drive/permissions' {
-  class DrivePermissions {
+  export class DrivePermissions {
     static create(fileId: string, type: string, role: string): Promise<{}>;
     private static _execute(request, resolve, reject);
     private static _handleResponse(response, resolve, reject);
@@ -73,7 +66,7 @@ declare module 'cx/google/drive/permissions' {
 }
 
 declare module 'cx/google/drive/query' {
-  interface IDriveQueryQ {
+  export interface IDriveQueryQ {
     name?: string;
     fullText?: string;
     mimeType?: string;
@@ -90,7 +83,7 @@ declare module 'cx/google/drive/query' {
     appProperties?: string;
   }
 
-  interface IDriveGApiQuery {
+  export interface IDriveGApiQuery {
     fields?: string;
     fileId?: string;
     corpus?: string;
@@ -101,7 +94,7 @@ declare module 'cx/google/drive/query' {
     spaces?: string;
   }
 
-  class DriveQuery {
+  export class DriveQuery {
     private _corpus;
     private _fields;
     private _fileId;

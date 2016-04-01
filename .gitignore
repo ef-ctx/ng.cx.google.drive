@@ -23,6 +23,7 @@ tags
 # Npm & Bower modules
 /node_modules/
 /vendor/
+/typings/
 
 # builds and test related
 /build/

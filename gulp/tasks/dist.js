@@ -19,7 +19,7 @@
         inputPath = appConfig.typescript.inputPath,
         outputFile = appConfig.dist + '/bundles/cx.google.drive.js';
 
-        builder.bundle(inputPath, outputFile,  { format: 'register', minify: true, sourceMaps: true })
+        builder.bundle(inputPath, outputFile,  { format: 'register', minify: true, sourceMaps: false })
           .then(function () {
             cb();
           })
@@ -32,6 +32,7 @@
 
   exports.task = dist;
   exports.dependencies = [
-    'dist-build'
+    'dist-build',
+    'dist-typings'
   ];
 }());

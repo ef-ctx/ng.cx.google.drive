@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/browser.d.ts" />
 
 declare var angular: any;
 declare var CLIENT_ID: any;

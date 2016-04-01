@@ -12,10 +12,6 @@
         result = gulp.src(files).pipe(ts(tsProject.options));
 
       return merge([
-        gulp.src(appConfig.src.distTypings, {
-            'base': 'src/'
-          })
-          .pipe(gulp.dest(appConfig.dist)),
         result.js.pipe(gulp.dest(appConfig.dist))
       ]);
     };

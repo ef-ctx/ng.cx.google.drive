@@ -1,0 +1,9 @@
+{
+  "name": "cx.google.drive",
+  "version": false,
+  "ambientDependencies": {
+    "es6-promise": "github:DefinitelyTyped/DefinitelyTyped/es6-promise/es6-promise.d.ts#ba257a9b91bc0de1bdd9091b6723194c905a902a",
+    "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#ba257a9b91bc0de1bdd9091b6723194c905a902a",
+    "cx.google.core": "npm:cx.google.core"
+  }
+}
