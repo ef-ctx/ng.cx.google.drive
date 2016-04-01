@@ -20,7 +20,6 @@
   "author": "",
   "typings": "./src/cx/google/drive/drive.d.ts",
   "dependencies": {
-    "cx.google.core": "^1.1.4"
   },
   "devDependencies": {
     "es6-promise": "^3.0.2",
