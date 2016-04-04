@@ -1,6 +1,6 @@
 {
   "name": "cx.google.drive",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "angular 1.0 wrapper for google drive api written in typescript",
   "license": {
     "type": "MIT",
