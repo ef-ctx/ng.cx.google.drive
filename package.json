@@ -19,7 +19,9 @@
   "keywords": [],
   "author": "",
   "typings": "./src/cx/google/drive/drive.d.ts",
-  "dependencies": {},
+  "dependencies": {
+      "cx.google.core": "^1.1.4"
+  },
   "devDependencies": {
     "es6-promise": "^3.0.2",
     "gulp": "^3.9.0",
