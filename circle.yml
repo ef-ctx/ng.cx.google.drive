@@ -6,7 +6,10 @@ dependencies:
   override:
     - npm install -g npm@3.3.12
     - npm install -g gulp
+    - npm install -g typings
     - npm install
+  post:
+    - typings install
 
 test:
   override:
