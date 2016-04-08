@@ -21,6 +21,7 @@
   "typings": "./src/cx/google/drive/drive.d.ts",
   "dependencies": {},
   "devDependencies": {
+    "cx.google.core": "^1.1.4",
     "es6-promise": "^3.0.2",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
