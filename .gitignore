@@ -29,7 +29,7 @@ tags
 /build/
 /dist/
 /coverage/
-test-results.xml
+/reports/
 
 # example
 /example/cx
